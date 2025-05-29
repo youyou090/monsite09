@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Mon Site 09</title>
+    <title>GameHub - Jeux de Société en Ligne</title>
     <style>
         * {
             margin: 0;
@@ -12,11 +12,10 @@
         }
 
         body {
-            font-family: Arial, sans-serif;
-            line-height: 1.6;
-            color: #333;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
             background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
             min-height: 100vh;
+            color: #fff;
         }
 
         .container {
@@ -26,121 +25,280 @@
         }
 
         header {
-            background: rgba(255, 255, 255, 0.1);
-            backdrop-filter: blur(10px);
-            padding: 20px 0;
-            margin-bottom: 40px;
-            border-radius: 15px;
             text-align: center;
+            margin-bottom: 40px;
+            animation: fadeInDown 1s ease-out;
         }
 
         h1 {
-            color: white;
-            font-size: 2.5em;
-            margin-bottom: 10px;
+            font-size: 3rem;
             text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+            margin-bottom: 10px;
         }
 
         .subtitle {
-            color: rgba(255, 255, 255, 0.8);
-            font-size: 1.2em;
+            font-size: 1.2rem;
+            opacity: 0.9;
         }
 
-        .content {
-            background: rgba(255, 255, 255, 0.95);
-            padding: 40px;
-            border-radius: 15px;
-            box-shadow: 0 8px 32px rgba(0,0,0,0.1);
-            margin-bottom: 30px;
-        }
-
-        .section {
-            margin-bottom: 30px;
-        }
-
-        h2 {
-            color: #4a5568;
-            margin-bottom: 15px;
-            font-size: 1.8em;
-            border-bottom: 3px solid #667eea;
-            padding-bottom: 10px;
-        }
-
-        p {
-            margin-bottom: 15px;
-            font-size: 1.1em;
-            text-align: justify;
-        }
-
-        .card {
-            background: linear-gradient(45deg, #f093fb 0%, #f5576c 100%);
-            color: white;
-            padding: 20px;
-            border-radius: 10px;
-            margin: 20px 0;
-            text-align: center;
-        }
-
-        .card h3 {
-            margin-bottom: 10px;
-            font-size: 1.5em;
-        }
-
-        .grid {
+        .games-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 20px;
-            margin-top: 30px;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 30px;
+            margin-bottom: 40px;
         }
 
-        .grid-item {
-            background: #f7fafc;
-            padding: 25px;
+        .game-card {
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            border-radius: 20px;
+            padding: 30px;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            transition: all 0.3s ease;
+            animation: fadeInUp 1s ease-out;
+        }
+
+        .game-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 20px 40px rgba(0,0,0,0.2);
+            background: rgba(255, 255, 255, 0.15);
+        }
+
+        .game-title {
+            font-size: 1.8rem;
+            margin-bottom: 15px;
+            color: #fff;
+        }
+
+        .game-description {
+            margin-bottom: 20px;
+            opacity: 0.9;
+            line-height: 1.6;
+        }
+
+        .play-btn {
+            background: linear-gradient(45deg, #ff6b6b, #ff8e8e);
+            color: white;
+            border: none;
+            padding: 12px 30px;
+            border-radius: 25px;
+            cursor: pointer;
+            font-size: 1rem;
+            font-weight: bold;
+            transition: all 0.3s ease;
+            width: 100%;
+        }
+
+        .play-btn:hover {
+            transform: scale(1.05);
+            box-shadow: 0 5px 15px rgba(255, 107, 107, 0.4);
+        }
+
+        .game-area {
+            display: none;
+            background: rgba(255, 255, 255, 0.95);
+            color: #333;
+            border-radius: 20px;
+            padding: 30px;
+            margin-top: 20px;
+            animation: slideIn 0.5s ease-out;
+        }
+
+        .game-area.active {
+            display: block;
+        }
+
+        .back-btn {
+            background: #6c757d;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 15px;
+            cursor: pointer;
+            margin-bottom: 20px;
+            transition: all 0.3s ease;
+        }
+
+        .back-btn:hover {
+            background: #5a6268;
+            transform: scale(1.05);
+        }
+
+        /* Tic Tac Toe Styles */
+        .tic-tac-toe-board {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 5px;
+            max-width: 300px;
+            margin: 20px auto;
+        }
+
+        .tic-cell {
+            width: 80px;
+            height: 80px;
+            border: 3px solid #333;
+            background: white;
+            font-size: 2rem;
+            font-weight: bold;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.3s ease;
+        }
+
+        .tic-cell:hover {
+            background: #f0f0f0;
+            transform: scale(1.05);
+        }
+
+        /* Memory Game Styles */
+        .memory-board {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 10px;
+            max-width: 400px;
+            margin: 20px auto;
+        }
+
+        .memory-card {
+            width: 80px;
+            height: 80px;
+            background: linear-gradient(45deg, #667eea, #764ba2);
             border-radius: 10px;
-            border-left: 5px solid #667eea;
-            transition: transform 0.3s ease;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 2rem;
+            color: white;
+            transition: all 0.3s ease;
+            transform-style: preserve-3d;
         }
 
-        .grid-item:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 10px 25px rgba(0,0,0,0.1);
+        .memory-card.flipped {
+            background: white;
+            color: #333;
+            transform: rotateY(180deg);
+        }
+
+        .memory-card.matched {
+            background: #28a745;
+            transform: scale(0.9);
+        }
+
+        /* Connect 4 Styles */
+        .connect4-board {
+            display: grid;
+            grid-template-columns: repeat(7, 1fr);
+            gap: 5px;
+            max-width: 420px;
+            margin: 20px auto;
+        }
+
+        .connect4-cell {
+            width: 50px;
+            height: 50px;
+            border: 2px solid #333;
+            border-radius: 50%;
+            background: white;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .connect4-cell.red {
+            background: #ff4757;
+        }
+
+        .connect4-cell.yellow {
+            background: #ffa502;
+        }
+
+        .connect4-cell:hover {
+            transform: scale(1.1);
+        }
+
+        .game-status {
+            text-align: center;
+            font-size: 1.2rem;
+            margin: 20px 0;
+            font-weight: bold;
+        }
+
+        .reset-btn {
+            background: #17a2b8;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 15px;
+            cursor: pointer;
+            margin: 10px;
+            transition: all 0.3s ease;
+        }
+
+        .reset-btn:hover {
+            background: #138496;
+            transform: scale(1.05);
+        }
+
+        @keyframes fadeInDown {
+            from {
+                opacity: 0;
+                transform: translateY(-30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes slideIn {
+            from {
+                opacity: 0;
+                transform: translateX(-100px);
+            }
+            to {
+                opacity: 1;
+                transform: translateX(0);
+            }
         }
 
         footer {
             text-align: center;
-            padding: 30px;
-            color: rgba(255, 255, 255, 0.8);
-            background: rgba(0, 0, 0, 0.2);
-            border-radius: 15px;
             margin-top: 40px;
-        }
-
-        .btn {
-            display: inline-block;
-            background: linear-gradient(45deg, #667eea, #764ba2);
-            color: white;
-            padding: 12px 25px;
-            text-decoration: none;
-            border-radius: 25px;
-            margin: 10px;
-            transition: transform 0.3s ease;
-        }
-
-        .btn:hover {
-            transform: scale(1.05);
+            padding: 20px;
+            border-top: 1px solid rgba(255, 255, 255, 0.2);
         }
 
         @media (max-width: 768px) {
-            .container {
-                padding: 10px;
-            }
-            
             h1 {
-                font-size: 2em;
+                font-size: 2rem;
             }
             
-            .content {
-                padding: 20px;
+            .games-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .tic-cell {
+                width: 60px;
+                height: 60px;
+                font-size: 1.5rem;
+            }
+            
+            .memory-card {
+                width: 60px;
+                height: 60px;
             }
         }
     </style>
@@ -148,81 +306,311 @@
 <body>
     <div class="container">
         <header>
-            <h1>Bienvenue sur Mon Site 09</h1>
-            <p class="subtitle">Votre espace personnel sur le web</p>
+            <h1>🎲 GameHub</h1>
+            <p class="subtitle">Votre collection de jeux de société en ligne</p>
         </header>
 
-        <div class="content">
-            <div class="section">
-                <h2>À propos</h2>
-                <p>Bienvenue sur mon site web ! C'est ici que je partage mes idées, mes projets et mes passions. Ce site est hébergé gratuitement sur GitHub Pages.</p>
-                
-                <div class="card">
-                    <h3>🚀 Site en ligne !</h3>
-                    <p>Félicitations ! Votre site est maintenant publié et accessible au monde entier.</p>
+        <div id="main-menu">
+            <div class="games-grid">
+                <div class="game-card">
+                    <h3 class="game-title">🎯 Tic-Tac-Toe</h3>
+                    <p class="game-description">Le classique jeu de stratégie ! Alignez trois symboles pour gagner.</p>
+                    <button class="play-btn" onclick="showGame('tic-tac-toe')">Jouer</button>
                 </div>
-            </div>
 
-            <div class="section">
-                <h2>Mes Sections</h2>
-                <div class="grid">
-                    <div class="grid-item">
-                        <h3>📝 Blog</h3>
-                        <p>Partagez vos pensées et expériences avec le monde.</p>
-                    </div>
-                    <div class="grid-item">
-                        <h3>💼 Portfolio</h3>
-                        <p>Présentez vos projets et réalisations professionnelles.</p>
-                    </div>
-                    <div class="grid-item">
-                        <h3>📞 Contact</h3>
-                        <p>Permettez aux visiteurs de vous contacter facilement.</p>
-                    </div>
+                <div class="game-card">
+                    <h3 class="game-title">🧠 Memory</h3>
+                    <p class="game-description">Testez votre mémoire ! Trouvez toutes les paires de cartes identiques.</p>
+                    <button class="play-btn" onclick="showGame('memory')">Jouer</button>
                 </div>
-            </div>
 
-            <div class="section">
-                <h2>Prochaines étapes</h2>
-                <p>Maintenant que votre site est en ligne, vous pouvez :</p>
-                <ul style="margin: 20px 0; padding-left: 30px;">
-                    <li>Modifier le contenu de cette page</li>
-                    <li>Ajouter de nouvelles pages</li>
-                    <li>Personnaliser les couleurs et le design</li>
-                    <li>Ajouter vos propres images</li>
-                </ul>
-                
-                <div style="text-align: center; margin-top: 30px;">
-                    <a href="#" class="btn">Découvrir plus</a>
-                    <a href="#" class="btn">Me contacter</a>
+                <div class="game-card">
+                    <h3 class="game-title">🔴 Puissance 4</h3>
+                    <p class="game-description">Alignez quatre jetons de votre couleur avant votre adversaire !</p>
+                    <button class="play-btn" onclick="showGame('connect4')">Jouer</button>
+                </div>
+
+                <div class="game-card">
+                    <h3 class="game-title">🎲 Lancer de Dés</h3>
+                    <p class="game-description">Jeu de hasard simple et amusant avec des dés virtuels.</p>
+                    <button class="play-btn" onclick="showGame('dice')">Jouer</button>
                 </div>
             </div>
         </div>
 
+        <!-- Tic Tac Toe Game -->
+        <div id="tic-tac-toe" class="game-area">
+            <button class="back-btn" onclick="showMenu()">← Retour au menu</button>
+            <h2>Tic-Tac-Toe</h2>
+            <div class="game-status" id="tic-status">Joueur X commence</div>
+            <div class="tic-tac-toe-board" id="tic-board"></div>
+            <button class="reset-btn" onclick="resetTicTacToe()">Nouvelle partie</button>
+        </div>
+
+        <!-- Memory Game -->
+        <div id="memory" class="game-area">
+            <button class="back-btn" onclick="showMenu()">← Retour au menu</button>
+            <h2>Jeu de Memory</h2>
+            <div class="game-status" id="memory-status">Cliquez sur les cartes pour les retourner</div>
+            <div class="memory-board" id="memory-board"></div>
+            <button class="reset-btn" onclick="resetMemory()">Nouvelle partie</button>
+        </div>
+
+        <!-- Connect 4 Game -->
+        <div id="connect4" class="game-area">
+            <button class="back-btn" onclick="showMenu()">← Retour au menu</button>
+            <h2>Puissance 4</h2>
+            <div class="game-status" id="connect4-status">Joueur Rouge commence</div>
+            <div class="connect4-board" id="connect4-board"></div>
+            <button class="reset-btn" onclick="resetConnect4()">Nouvelle partie</button>
+        </div>
+
+        <!-- Dice Game -->
+        <div id="dice" class="game-area">
+            <button class="back-btn" onclick="showMenu()">← Retour au menu</button>
+            <h2>Lancer de Dés</h2>
+            <div class="game-status" id="dice-status">Cliquez pour lancer les dés !</div>
+            <div style="text-align: center; margin: 30px 0;">
+                <div style="font-size: 4rem; margin: 20px 0;" id="dice-display">🎲 🎲</div>
+                <button class="play-btn" onclick="rollDice()" style="width: auto; padding: 15px 30px;">Lancer les dés</button>
+            </div>
+            <div id="dice-history" style="margin-top: 30px;"></div>
+        </div>
+
         <footer>
-            <p>&copy; 2025 Mon Site 09 - Créé avec ❤️ et hébergé sur GitHub Pages</p>
+            <p>© 2025 GameHub - Amusez-vous bien ! 🎮</p>
         </footer>
     </div>
 
     <script>
-        // Animation simple au chargement
-        document.addEventListener('DOMContentLoaded', function() {
-            const cards = document.querySelectorAll('.grid-item');
-            cards.forEach((card, index) => {
-                setTimeout(() => {
-                    card.style.opacity = '0';
-                    card.style.transform = 'translateY(20px)';
-                    card.style.transition = 'all 0.6s ease';
-                    
-                    setTimeout(() => {
-                        card.style.opacity = '1';
-                        card.style.transform = 'translateY(0)';
-                    }, 100);
-                }, index * 150);
-            });
-        });
+        // Game state variables
+        let currentPlayer = 'X';
+        let ticTacToeBoard = Array(9).fill('');
+        let memoryCards = [];
+        let flippedCards = [];
+        let matchedPairs = 0;
+        let connect4Board = Array(42).fill('');
+        let connect4CurrentPlayer = 'red';
+        let diceHistory = [];
 
-        // Message de bienvenue
-        console.log('🎉 Bienvenue sur votre nouveau site web !');
+        // Navigation functions
+        function showGame(gameId) {
+            document.getElementById('main-menu').style.display = 'none';
+            document.getElementById(gameId).style.display = 'block';
+            document.getElementById(gameId).classList.add('active');
+        }
+
+        function showMenu() {
+            document.getElementById('main-menu').style.display = 'block';
+            document.querySelectorAll('.game-area').forEach(area => {
+                area.style.display = 'none';
+                area.classList.remove('active');
+            });
+        }
+
+        // Tic Tac Toe Game
+        function initTicTacToe() {
+            const board = document.getElementById('tic-board');
+            board.innerHTML = '';
+            ticTacToeBoard = Array(9).fill('');
+            currentPlayer = 'X';
+            document.getElementById('tic-status').textContent = 'Joueur X commence';
+            
+            for (let i = 0; i < 9; i++) {
+                const cell = document.createElement('div');
+                cell.classList.add('tic-cell');
+                cell.addEventListener('click', () => makeTicMove(i));
+                board.appendChild(cell);
+            }
+        }
+
+        function makeTicMove(index) {
+            if (ticTacToeBoard[index] === '') {
+                ticTacToeBoard[index] = currentPlayer;
+                document.querySelectorAll('.tic-cell')[index].textContent = currentPlayer;
+                
+                if (checkTicWin()) {
+                    document.getElementById('tic-status').textContent = `Joueur ${currentPlayer} gagne !`;
+                } else if (ticTacToeBoard.every(cell => cell !== '')) {
+                    document.getElementById('tic-status').textContent = 'Match nul !';
+                } else {
+                    currentPlayer = currentPlayer === 'X' ? 'O' : 'X';
+                    document.getElementById('tic-status').textContent = `Joueur ${currentPlayer} joue`;
+                }
+            }
+        }
+
+        function checkTicWin() {
+            const winPatterns = [
+                [0, 1, 2], [3, 4, 5], [6, 7, 8],
+                [0, 3, 6], [1, 4, 7], [2, 5, 8],
+                [0, 4, 8], [2, 4, 6]
+            ];
+            
+            return winPatterns.some(pattern => 
+                pattern.every(index => ticTacToeBoard[index] === currentPlayer)
+            );
+        }
+
+        function resetTicTacToe() {
+            initTicTacToe();
+        }
+
+        // Memory Game
+        function initMemory() {
+            const board = document.getElementById('memory-board');
+            board.innerHTML = '';
+            const symbols = ['🎮', '🎯', '🎲', '🎪', '🎨', '🎭', '🎸', '🎺'];
+            memoryCards = [...symbols, ...symbols].sort(() => Math.random() - 0.5);
+            flippedCards = [];
+            matchedPairs = 0;
+            document.getElementById('memory-status').textContent = 'Cliquez sur les cartes pour les retourner';
+            
+            memoryCards.forEach((symbol, index) => {
+                const card = document.createElement('div');
+                card.classList.add('memory-card');
+                card.textContent = '?';
+                card.addEventListener('click', () => flipMemoryCard(index, symbol));
+                board.appendChild(card);
+            });
+        }
+
+        function flipMemoryCard(index, symbol) {
+            const card = document.querySelectorAll('.memory-card')[index];
+            
+            if (flippedCards.length < 2 && !card.classList.contains('flipped') && !card.classList.contains('matched')) {
+                card.classList.add('flipped');
+                card.textContent = symbol;
+                flippedCards.push({ index, symbol, card });
+                
+                if (flippedCards.length === 2) {
+                    setTimeout(checkMemoryMatch, 1000);
+                }
+            }
+        }
+
+        function checkMemoryMatch() {
+            const [card1, card2] = flippedCards;
+            
+            if (card1.symbol === card2.symbol) {
+                card1.card.classList.add('matched');
+                card2.card.classList.add('matched');
+                matchedPairs++;
+                
+                if (matchedPairs === 8) {
+                    document.getElementById('memory-status').textContent = 'Félicitations ! Vous avez gagné !';
+                }
+            } else {
+                card1.card.classList.remove('flipped');
+                card2.card.classList.remove('flipped');
+                card1.card.textContent = '?';
+                card2.card.textContent = '?';
+            }
+            
+            flippedCards = [];
+        }
+
+        function resetMemory() {
+            initMemory();
+        }
+
+        // Connect 4 Game
+        function initConnect4() {
+            const board = document.getElementById('connect4-board');
+            board.innerHTML = '';
+            connect4Board = Array(42).fill('');
+            connect4CurrentPlayer = 'red';
+            document.getElementById('connect4-status').textContent = 'Joueur Rouge commence';
+            
+            for (let i = 0; i < 42; i++) {
+                const cell = document.createElement('div');
+                cell.classList.add('connect4-cell');
+                cell.addEventListener('click', () => makeConnect4Move(i % 7));
+                board.appendChild(cell);
+            }
+        }
+
+        function makeConnect4Move(col) {
+            for (let row = 5; row >= 0; row--) {
+                const index = row * 7 + col;
+                if (connect4Board[index] === '') {
+                    connect4Board[index] = connect4CurrentPlayer;
+                    document.querySelectorAll('.connect4-cell')[index].classList.add(connect4CurrentPlayer);
+                    
+                    if (checkConnect4Win(index)) {
+                        document.getElementById('connect4-status').textContent = `Joueur ${connect4CurrentPlayer === 'red' ? 'Rouge' : 'Jaune'} gagne !`;
+                    } else {
+                        connect4CurrentPlayer = connect4CurrentPlayer === 'red' ? 'yellow' : 'red';
+                        document.getElementById('connect4-status').textContent = `Joueur ${connect4CurrentPlayer === 'red' ? 'Rouge' : 'Jaune'} joue`;
+                    }
+                    break;
+                }
+            }
+        }
+
+        function checkConnect4Win(lastMove) {
+            const directions = [
+                [0, 1], [1, 0], [1, 1], [1, -1]
+            ];
+            
+            const row = Math.floor(lastMove / 7);
+            const col = lastMove % 7;
+            
+            return directions.some(([dx, dy]) => {
+                let count = 1;
+                
+                // Check positive direction
+                for (let i = 1; i < 4; i++) {
+                    const newRow = row + dx * i;
+                    const newCol = col + dy * i;
+                    if (newRow >= 0 && newRow < 6 && newCol >= 0 && newCol < 7 && 
+                        connect4Board[newRow * 7 + newCol] === connect4CurrentPlayer) {
+                        count++;
+                    } else break;
+                }
+                
+                // Check negative direction
+                for (let i = 1; i < 4; i++) {
+                    const newRow = row - dx * i;
+                    const newCol = col - dy * i;
+                    if (newRow >= 0 && newRow < 6 && newCol >= 0 && newCol < 7 && 
+                        connect4Board[newRow * 7 + newCol] === connect4CurrentPlayer) {
+                        count++;
+                    } else break;
+                }
+                
+                return count >= 4;
+            });
+        }
+
+        function resetConnect4() {
+            initConnect4();
+        }
+
+        // Dice Game
+        function rollDice() {
+            const dice1 = Math.floor(Math.random() * 6) + 1;
+            const dice2 = Math.floor(Math.random() * 6) + 1;
+            const total = dice1 + dice2;
+            
+            const diceSymbols = ['⚀', '⚁', '⚂', '⚃', '⚄', '⚅'];
+            document.getElementById('dice-display').textContent = `${diceSymbols[dice1-1]} ${diceSymbols[dice2-1]}`;
+            document.getElementById('dice-status').textContent = `Total: ${total}`;
+            
+            diceHistory.unshift(`${diceSymbols[dice1-1]} ${diceSymbols[dice2-1]} = ${total}`);
+            if (diceHistory.length > 10) diceHistory.pop();
+            
+            const historyDiv = document.getElementById('dice-history');
+            historyDiv.innerHTML = '<h3>Historique des lancers:</h3>' + 
+                diceHistory.map(roll => `<p>${roll}</p>`).join('');
+        }
+
+        // Initialize games when shown
+        document.addEventListener('DOMContentLoaded', function() {
+            initTicTacToe();
+            initMemory();
+            initConnect4();
+        });
     </script>
 </body>
 </html>
